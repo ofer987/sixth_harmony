@@ -23,10 +23,10 @@ func FindFiles(directory string) []string {
 			nestedDirectory := directory + "/" + file.Name()
 			nestedFiles := FindFiles(nestedDirectory)
 			for _, nestedFile := range nestedFiles {
-				filenames = append(filenames, file.Name()+"/"+nestedFile)
+				filenames = append(filenames, nestedFile)
 			}
 		} else {
-			filenames = append(filenames, file.Name())
+			filenames = append(filenames, directory+"/"+file.Name())
 		}
 	}
 	return filenames

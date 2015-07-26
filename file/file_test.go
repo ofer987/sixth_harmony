@@ -13,7 +13,7 @@ type MySuite struct{}
 var _ = Suite(&MySuite{})
 
 func (s *MySuite) Test_readFile(c *C) {
-	contents := readFile("good_morning.txt")
+	contents := readFile("../test/good_morning.txt")
 
 	c.Assert(contents, Equals, "Hello Dan, lets read the book Good Morning Canada together please.\nDan read Good Night Canada\nhello\n")
 }

@@ -21,15 +21,15 @@ func (s *MySuite) TestEvaluateFile(c *C) {
 	expectedWordCount["please"] = 1
 	expectedWordCount["night"] = 1
 
-	actualWordCount := *EvaluateFile("good_morning.txt")
+	actualWordCount := *EvaluateFile("../test/good_morning.txt")
 
 	c.Assert(compareMaps(actualWordCount, expectedWordCount), Equals, true)
 }
 
 func (s *MySuite) TestFindFiles(c *C) {
-	filepaths := []string{".gitignore", "Gemfile", "Guardfile", "README.md", "lib/sets.rb"}
+	filepaths := []string{"../test/.gitignore", "../test/Gemfile", "../test/Guardfile", "../test/README.md", "../test/good_morning.txt", "../test/lib/sets.rb"}
 
-	actualFilepaths := FindFiles("test")
+	actualFilepaths := FindFiles("../test")
 
 	// c.Assert(compareArrays(actualFilepaths, filepaths), Equals, true)
 	c.Assert(actualFilepaths, DeepEquals, filepaths)
