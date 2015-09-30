@@ -1,14 +1,14 @@
-package file
+package sixth_harmony
 
 import (
 	"io/ioutil"
 )
 
-func EvaluateFile(filepath string) *map[string]int {
+func CountWordsInFile(filepath string) *map[string]int {
 	content := readFile(filepath)
-	content = toValidString(content)
+	content = RemoveNonWordChars(content)
 
-	return wordCount(content)
+	return CountWords(content)
 }
 
 func FindFiles(directory string) []string {
@@ -30,4 +30,14 @@ func FindFiles(directory string) []string {
 		}
 	}
 	return filenames
+}
+
+func readFile(filepath string) string {
+	content, err := ioutil.ReadFile(filepath)
+
+	if err != nil {
+		return ""
+	}
+
+	return string(content)
 }

@@ -1,4 +1,4 @@
-package calculator
+package words
 
 import (
 	. "gopkg.in/check.v1"
@@ -11,8 +11,8 @@ type MySuite struct{}
 
 var _ = Suite(&MySuite{})
 
-func (s *MySuite) TestCompute(c *C) {
-	wordCount := *Compute("test")
+func (s *MySuite) TestCount(c *C) {
+	wordCount := *Count("/Users/ofer987/go/src/dan/sixth_harmony/test_short")
 
 	c.Assert(wordCount, Not(IsNil))
 

@@ -1,23 +1,11 @@
-package file
+package sixth_harmony
 
 import (
-	// "fmt"
-	"io/ioutil"
 	"regexp"
 	"strings"
 )
 
-func readFile(filepath string) string {
-	content, err := ioutil.ReadFile(filepath)
-
-	if err != nil {
-		return ""
-	}
-
-	return string(content)
-}
-
-func toValidString(rawString string) string {
+func RemoveNonWordChars(rawString string) string {
 	lowerCaseString := strings.ToLower(rawString)
 
 	// Remove non-word characters
@@ -36,18 +24,25 @@ func toValidString(rawString string) string {
 	return replacementString
 }
 
-func wordCount(content string) *map[string]int {
+func CountWords(content string) *map[string]int {
 	words := strings.Split(content, " ")
 
 	wordCount := make(map[string]int)
 	for _, word := range words {
-		// fmt.Printf("The word is %s", word)
-		if count, ok := wordCount[word]; ok {
-			wordCount[word] = count + 1
-		} else {
-			wordCount[word] = 1
+		if isWord(word) {
+			if count, ok := wordCount[word]; ok {
+				wordCount[word] = count + 1
+			} else {
+				wordCount[word] = 1
+			}
 		}
 	}
 
 	return &wordCount
+}
+
+func isWord(str string) bool {
+	regex := regexp.MustCompile("^[a-zA-Z_-]+$")
+
+	return regex.MatchString(str)
 }

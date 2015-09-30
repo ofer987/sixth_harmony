@@ -1,4 +1,4 @@
-package file
+package sixth_harmony
 
 import (
 	"fmt"
@@ -12,13 +12,13 @@ type MySuite struct{}
 
 var _ = Suite(&MySuite{})
 
-func (s *MySuite) Test_readFile(c *C) {
-	contents := readFile("../test/good_morning.txt")
+// func (s *MySuite) Test_readFile(c *C) {
+// 	contents := readFile("/Users/ofer987/go/src/dan/sixth_harmony/test/good_morning.txt")
+//
+// 	c.Assert(contents, Equals, "Hello Dan, lets read the book Good Morning Canada together please.\nDan read Good Night Canada\nhello\n")
+// }
 
-	c.Assert(contents, Equals, "Hello Dan, lets read the book Good Morning Canada together please.\nDan read Good Night Canada\nhello\n")
-}
-
-func (s *MySuite) Test_wordCount(c *C) {
+func (s *MySuite) TestCountWords(c *C) {
 	expectedWordCount := make(map[string]int)
 
 	expectedWordCount["hello"] = 2
@@ -34,8 +34,25 @@ func (s *MySuite) Test_wordCount(c *C) {
 	expectedWordCount["please"] = 1
 	expectedWordCount["night"] = 1
 
-	content := "hello dan lets read the book good morning canada together please dan read good night canada hello"
-	actualWordCount := *wordCount(content)
+	actualContent := "hello dan lets read the book good morning canada together please dan read good night canada hello"
+	actualWordCount := *CountWords(actualContent)
+
+	c.Assert(compareMaps(actualWordCount, expectedWordCount), Equals, true)
+}
+
+func (s *MySuite) TestAll(c *C) {
+	content := "The code was:\nh128\nIt was used 12 times."
+
+	expectedWordCount := map[string]int{
+		"the":   1,
+		"code":  1,
+		"was":   2,
+		"it":    1,
+		"used":  1,
+		"times": 1,
+	}
+
+	actualWordCount := *CountWords(RemoveNonWordChars(content))
 
 	c.Assert(compareMaps(actualWordCount, expectedWordCount), Equals, true)
 }
@@ -44,14 +61,19 @@ func (s *MySuite) TestOnlyOneWhiteSpace(c *C) {
 	rawString := "  remove \nOk?"
 	expectedString := "remove ok"
 
-	c.Assert(toValidString(rawString), Equals, expectedString)
+	c.Assert(RemoveNonWordChars(rawString), Equals, expectedString)
 }
 
-func (s *MySuite) Test_toValidString(c *C) {
+func (s *MySuite) TestRemoveNonWordChars(c *C) {
 	rawString := "Dan, please remove all non-word chars!\nOk?"
 	expectedString := "dan please remove all non word chars ok"
 
-	c.Assert(toValidString(rawString), Equals, expectedString)
+	c.Assert(RemoveNonWordChars(rawString), Equals, expectedString)
+
+	rawString = "D2n"
+	expectedString = "d2n"
+
+	c.Assert(RemoveNonWordChars(rawString), Equals, expectedString)
 }
 
 func compareMaps(actual map[string]int, expected map[string]int) bool {
@@ -63,7 +85,7 @@ func compareMaps(actual map[string]int, expected map[string]int) bool {
 	for key, value := range actual {
 		if expectedValue, ok := expected[key]; ok {
 			if expectedValue != value {
-				fmt.Printf("%s\n%s", actual, expected)
+				fmt.Printf("Actual: %s\nExpected: %s", actual, expected)
 				return false
 			}
 		}
