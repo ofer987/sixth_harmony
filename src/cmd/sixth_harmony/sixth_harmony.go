@@ -1,9 +1,9 @@
 package main
 
 import (
-	"dan/sixth_harmony/words"
 	"fmt"
 	"os"
+	"sixth_harmony"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 	}
 	fmt.Printf("Current Directory: %s\n", currentDirectory)
 
-	wordCount := *words.Count(currentDirectory)
+	wordCount := *sixth_harmony.CountWordsInDirectory(currentDirectory)
 	for word, count := range wordCount {
 		fmt.Printf("%s: %d\n", word, count)
 	}

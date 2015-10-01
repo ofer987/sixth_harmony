@@ -5,6 +5,16 @@ import (
 	. "gopkg.in/check.v1"
 )
 
+func (s *MySuite) TestCountWordsInDirectory(c *C) {
+	wordCount := *CountWordsInDirectory("../../test_short")
+
+	c.Assert(wordCount, Not(IsNil))
+
+	c.Assert(wordCount["hello"], Equals, 2)
+	c.Assert(wordCount["dan"], Equals, 1)
+	c.Assert(wordCount["edith"], Equals, 1)
+}
+
 func (s *MySuite) TestCountWordsInFile(c *C) {
 	expectedWordCount := make(map[string]int)
 
@@ -21,15 +31,15 @@ func (s *MySuite) TestCountWordsInFile(c *C) {
 	expectedWordCount["please"] = 1
 	expectedWordCount["night"] = 1
 
-	actualWordCount := *CountWordsInFile("/Users/ofer987/go/src/dan/sixth_harmony/test/good_morning.txt")
+	actualWordCount := *CountWordsInFile("../../test/good_morning.txt")
 
 	c.Assert(compareMaps(actualWordCount, expectedWordCount), Equals, true)
 }
 
 func (s *MySuite) TestFindFilesWithAbsolutePath(c *C) {
-	filepaths := []string{"/Users/ofer987/go/src/dan/sixth_harmony/test/.gitignore", "/Users/ofer987/go/src/dan/sixth_harmony/test/Gemfile", "/Users/ofer987/go/src/dan/sixth_harmony/test/Guardfile", "/Users/ofer987/go/src/dan/sixth_harmony/test/README.md", "/Users/ofer987/go/src/dan/sixth_harmony/test/good_morning.txt", "/Users/ofer987/go/src/dan/sixth_harmony/test/lib/sets.rb"}
+	filepaths := []string{"../../test/.gitignore", "../../test/Gemfile", "../../test/Guardfile", "../../test/README.md", "../../test/good_morning.txt", "../../test/lib/sets.rb"}
 
-	actualFilepaths := FindFiles("/Users/ofer987/go/src/dan/sixth_harmony/test")
+	actualFilepaths := FindFiles("../../test")
 
 	c.Assert(actualFilepaths, DeepEquals, filepaths)
 }

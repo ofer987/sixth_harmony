@@ -1,0 +1,11 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "gopkg.in/check.v1",
+			"repository": "https://github.com/go-check/check",
+			"revision": "11d3bc7aa68e238947792f30573146a3231fc0f1",
+			"branch": "v1"
+		}
+	]
+}

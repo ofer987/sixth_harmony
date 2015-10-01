@@ -4,6 +4,26 @@ import (
 	"io/ioutil"
 )
 
+func CountWordsInDirectory(directory string) *map[string]int {
+	filepaths := FindFiles(directory)
+
+	masterWordCount := make(map[string]int)
+	var wordCount map[string]int
+	for _, filepath := range filepaths {
+		wordCount = *CountWordsInFile(filepath)
+
+		for word, count := range wordCount {
+			if masterCount, ok := masterWordCount[word]; ok {
+				masterWordCount[word] = masterCount + count
+			} else {
+				masterWordCount[word] = count
+			}
+		}
+	}
+
+	return &masterWordCount
+}
+
 func CountWordsInFile(filepath string) *map[string]int {
 	content := readFile(filepath)
 	content = RemoveNonWordChars(content)
