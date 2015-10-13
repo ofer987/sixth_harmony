@@ -1,7 +1,9 @@
 package sixth_harmony
 
 import (
+	"fmt"
 	"io/ioutil"
+	"sixth_harmony/progress"
 )
 
 func CountWordsInDirectory(directory string) *map[string]int {
@@ -26,9 +28,9 @@ func CountWordsInDirectory(directory string) *map[string]int {
 
 func CountWordsInFile(filepath string) *map[string]int {
 	content := readFile(filepath)
-	content = RemoveNonWordChars(content)
+	content = removeNonWordChars(content)
 
-	return CountWords(content)
+	return countWords(content)
 }
 
 func FindFiles(directory string) []string {
@@ -53,7 +55,18 @@ func FindFiles(directory string) []string {
 }
 
 func readFile(filepath string) string {
+	// Ignore hidden files
+	if filepath[0] == '.' {
+		return ""
+	}
+
 	content, err := ioutil.ReadFile(filepath)
+
+	size, err := progress.FileSize(filepath)
+	if err != nil {
+		return ""
+	}
+	fmt.Printf("%v:\t%v\n", filepath, size)
 
 	if err != nil {
 		return ""

@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func RemoveNonWordChars(rawString string) string {
+func removeNonWordChars(rawString string) string {
 	lowerCaseString := strings.ToLower(rawString)
 
 	// Remove non-word characters
@@ -24,7 +24,7 @@ func RemoveNonWordChars(rawString string) string {
 	return replacementString
 }
 
-func CountWords(content string) *map[string]int {
+func countWords(content string) *map[string]int {
 	words := strings.Split(content, " ")
 
 	wordCount := make(map[string]int)

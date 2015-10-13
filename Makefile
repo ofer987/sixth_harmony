@@ -14,7 +14,7 @@ all:
 	@echo "  devdeps     - pull and setup dev dependencies"
 
 run: build
-	./sixth_harmony \
+	./bin/sixth_harmony \
 			-v 1 \
 			-logtostderr=true
 

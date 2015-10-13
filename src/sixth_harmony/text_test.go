@@ -18,7 +18,7 @@ var _ = Suite(&MySuite{})
 // 	c.Assert(contents, Equals, "Hello Dan, lets read the book Good Morning Canada together please.\nDan read Good Night Canada\nhello\n")
 // }
 
-func (s *MySuite) TestCountWords(c *C) {
+func (s *MySuite) TestcountWords(c *C) {
 	expectedWordCount := make(map[string]int)
 
 	expectedWordCount["hello"] = 2
@@ -35,7 +35,7 @@ func (s *MySuite) TestCountWords(c *C) {
 	expectedWordCount["night"] = 1
 
 	actualContent := "hello dan lets read the book good morning canada together please dan read good night canada hello"
-	actualWordCount := *CountWords(actualContent)
+	actualWordCount := *countWords(actualContent)
 
 	c.Assert(compareMaps(actualWordCount, expectedWordCount), Equals, true)
 }
@@ -52,28 +52,28 @@ func (s *MySuite) TestAll(c *C) {
 		"times": 1,
 	}
 
-	actualWordCount := *CountWords(RemoveNonWordChars(content))
+	actualWordCount := *countWords(removeNonWordChars(content))
 
 	c.Assert(compareMaps(actualWordCount, expectedWordCount), Equals, true)
 }
 
-func (s *MySuite) TestOnlyOneWhiteSpace(c *C) {
+func (s *MySuite) TestonlyOneWhiteSpace(c *C) {
 	rawString := "  remove \nOk?"
 	expectedString := "remove ok"
 
-	c.Assert(RemoveNonWordChars(rawString), Equals, expectedString)
+	c.Assert(removeNonWordChars(rawString), Equals, expectedString)
 }
 
-func (s *MySuite) TestRemoveNonWordChars(c *C) {
+func (s *MySuite) TestremoveNonWordChars(c *C) {
 	rawString := "Dan, please remove all non-word chars!\nOk?"
 	expectedString := "dan please remove all non word chars ok"
 
-	c.Assert(RemoveNonWordChars(rawString), Equals, expectedString)
+	c.Assert(removeNonWordChars(rawString), Equals, expectedString)
 
 	rawString = "D2n"
 	expectedString = "d2n"
 
-	c.Assert(RemoveNonWordChars(rawString), Equals, expectedString)
+	c.Assert(removeNonWordChars(rawString), Equals, expectedString)
 }
 
 func compareMaps(actual map[string]int, expected map[string]int) bool {
